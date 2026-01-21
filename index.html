@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Motherboard: Samspil med CPU, GPU, RAM og Lager — Tre niveauer</title>
+<meta name="description" content="En pædagogisk og teknisk guide til hvordan motherboardet arbejder sammen med CPU, GPU, RAM, SSD/HDD og NVMe. Tre læseniveauer: Oversigt, Mellem, Avanceret." />
+<style>
+  :root{
+    --bg:#071021; --card:#0c1320; --muted:#9fb0bf; --accent:#4fd1c5; --accent2:#79c0ff; --text:#e6eef6;
+    --glass: rgba(255,255,255,0.03);
+    --radius:12px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background:linear-gradient(180deg,#04101a 0%, #071018 60%); color:var(--text); -webkit-font-smoothing:antialiased;
+  }
+
+  header{
+    padding:2.25rem 1.25rem; text-align:center; border-bottom:1px solid rgba(255,255,255,0.03);
+    background:linear-gradient(180deg, rgba(12,19,32,0.6), transparent);
+  }
+  header h1{margin:0; font-size:clamp(1.6rem,3.6vw,2.4rem); color:var(--accent2)}
+  header p{margin:.5rem 0 0; color:var(--muted); max-width:900px; margin-left:auto; margin-right:auto}
+
+  nav{
+    display:flex; gap:.5rem; justify-content:center; flex-wrap:wrap; padding:.6rem 1rem;
+    position:sticky; top:0; z-index:60; backdrop-filter: blur(6px);
+    border-bottom:1px solid rgba(255,255,255,0.02);
+    background:linear-gradient(180deg, rgba(7,16,33,0.6), rgba(7,16,33,0.3));
+  }
+  nav a{
+    color:var(--accent); text-decoration:none; padding:.45rem .8rem; border-radius:10px; font-weight:600;
+  }
+  nav a:hover{background:rgba(79,209,197,0.06)}
+
+  main{max-width:1200px; margin:2rem auto; padding:0 1rem; display:grid; grid-template-columns: 1fr 340px; gap:1.25rem}
+  @media (max-width:1000px){ main{grid-template-columns:1fr} }
+
+  .card{
+    background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+    border-radius:var(--radius); padding:1rem 1.1rem; border:1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+  }
+
+  h2{color:var(--accent2); margin:0 0 .5rem}
+  h3{color:var(--accent); margin:0 0 .4rem}
+  p.lead{color:var(--muted); margin-top:.25rem}
+
+  .detail-controls{display:flex; gap:.5rem; margin-top:.6rem; flex-wrap:wrap}
+  .btn{padding:.4rem .7rem; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:var(--text); cursor:pointer}
+  .btn.active{background:var(--accent); color:#042022; font-weight:700}
+
+  .accordion{margin-top:1rem}
+  .accordion-item{border-radius:10px; overflow:hidden; margin-bottom:.6rem; border:1px solid rgba(255,255,255,0.03)}
+  .accordion-header{display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.85rem 1rem; cursor:pointer; background:transparent; border:0}
+  .accordion-header:hover{background:rgba(255,255,255,0.02)}
+  .accordion-title{display:flex; gap:.75rem; align-items:center}
+  .icon{
+    width:36px; height:36px; border-radius:8px; display:inline-grid; place-items:center; background:linear-gradient(135deg, rgba(79,209,197,0.08), rgba(121,192,255,0.04));
+    color:var(--accent); font-weight:700;
+  }
+  .accordion-panel{padding:0 1rem 1rem; display:none}
+  .accordion-panel.open{display:block; animation:fadeIn .35s ease}
+  @keyframes fadeIn{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+
+  .level{display:none}
+  .level.overview{display:block}
+  .more{background:rgba(79,209,197,0.04); padding:.6rem; border-radius:8px; margin-top:.6rem; color:var(--text)}
+  .note{background:#071826; border-left:4px solid var(--accent); padding:.6rem; margin-top:.6rem; border-radius:6px; color:var(--muted)}
+
+  .diagram{
+    margin-top:1rem; display:flex; gap:1rem; flex-wrap:wrap; align-items:center; justify-content:center;
+  }
+  .chip{
+    width:120px; height:80px; border-radius:10px; background:linear-gradient(180deg,#0f1724,#07101a); border:1px solid rgba(255,255,255,0.04);
+    display:flex; align-items:center; justify-content:center; color:var(--accent2); font-weight:700; box-shadow:0 8px 20px rgba(2,6,23,0.6);
+  }
+  .link-line{width:160px; height:2px; background:linear-gradient(90deg,var(--accent),var(--accent2)); border-radius:2px}
+
+  .glossary dt{font-weight:700; color:var(--accent)}
+  .glossary dd{margin:0 0 .6rem; color:var(--muted)}
+
+  footer{grid-column:1/-1; text-align:center; padding:1rem; color:var(--muted); border-top:1px solid rgba(255,255,255,0.02); margin-top:1rem; background:transparent}
+  a.inline{color:var(--accent); text-decoration:underline}
+
+  /* Accessibility focus */
+  .accordion-header:focus{outline:3px solid rgba(79,209,197,0.12); outline-offset:3px}
+  .btn:focus{outline:3px solid rgba(121,192,255,0.12); outline-offset:3px}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Motherboard: Samspil med CPU, GPU, RAM og Lager</h1>
+  <p>En pædagogisk og teknisk guide med tre læseniveauer. Klik på en sektion for at åbne forklaringer og skift niveau for mere eller mindre detaljer.</p>
+</header>
+
+<nav aria-label="Hurtig navigation">
+  <a href="#overview">Oversigt</a>
+  <a href="#cpu">CPU</a>
+  <a href="#gpu">GPU</a>
+  <a href="#ram">RAM</a>
+  <a href="#storage">Lager</a>
+  <a href="#power">VRM & Chipset</a>
+  <a href="#build">Byggetips</a>
+</nav>
+
+<main>
+  <!-- Left column: content -->
+  <section id="overview" class="card" aria-labelledby="ovh">
+    <h2 id="ovh">Oversigt</h2>
+    <p class="lead">Motherboardet er den centrale platform, der forbinder strøm og data mellem CPU, GPU, RAM og lager. Her får du tre niveauer: Oversigt, Mellem og Avanceret — vælg et niveau og klik på de enkelte emner for at læse mere.</p>
+
+    <div class="detail-controls" aria-hidden="false">
+      <button class="btn active" data-level="overview">Oversigt</button>
+      <button class="btn" data-level="intermediate">Mellem</button>
+      <button class="btn" data-level="advanced">Avanceret</button>
+    </div>
+
+    <div class="note">Tip: Brug navigationen øverst til at hoppe direkte til CPU, GPU, RAM eller Lager. Alle forklaringer er opdelt i tre læseniveauer.</div>
+  </section>
+
+  <section id="cpu" class="card" aria-labelledby="cpu-h">
+    <h2 id="cpu-h">CPU og motherboard</h2>
+
+    <div class="accordion">
+      <div class="accordion-item">
+        <button class="accordion-header" data-target="cpu-1" aria-expanded="false">
+          <div class="accordion-title">
+            <span class="icon">C</span>
+            <div>
+              <div style="font-weight:700">Hvordan CPU'en kommunikerer</div>
+              <div style="color:var(--muted); font-size:.95rem">Memory controller, PCIe lanes og opstart</div>
+            </div>
+          </div>
+          <div aria-hidden="true">▸</div>
+        </button>
+        <div id="cpu-1" class="accordion-panel">
+          <div class="level overview">
+            <p>CPU'en udfører instruktioner. Motherboardet forbinder CPU'en til RAM (hukommelse), GPU (grafik) og lager via dedikerede links.</p>
+          </div>
+
+          <div class="level intermediate">
+            <p>Moderne CPU'er har indbygget memory controller (DDR4/DDR5) og ofte PCIe‑controller. Memory controlleren taler direkte med RAM via DIMM‑slots; PCIe‑controlleren leverer baner til GPU og NVMe.</p>
+            <ul>
+              <li><strong>Direkte links:</strong> CPU ↔ RAM (memory channels).</li>
+              <li><strong>Højhastighedslinks:</strong> CPU ↔ GPU/NVMe via PCIe lanes.</li>
+              <li><strong>Opstart:</strong> BIOS/UEFI initialiserer CPU og periferi ved boot.</li>
+            </ul>
+          </div>
+
+          <div class="level advanced">
+            <p>Teknisk: Soklens pads fører power rails (Vcore, VccIO), differential pairs for højhastighedslinks og kontrolsignaler (reset, clock, SMBus). Memory training ved opstart sikrer timing mellem CPU og RAM; dette håndteres af BIOS/UEFI og memory controlleren. CPU'en kan også integrere PCIe root complexes og offload-funktioner (f.eks. NVMe controller logik).</p>
+            <p class="note">Praktisk konsekvens: Sokeltype og CPU‑generation bestemmer hvilke motherboard‑features (DDR‑type, PCIe‑generation) du kan bruge.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header" data-target="cpu-2" aria-expanded="false">
+          <div class="accordion-title">
+            <span class="icon">B</span>
+            <div>
+              <div style="font-weight:700">Strøm og VRM's rolle for CPU</div>
+              <div style="color:var(--muted); font-size:.95rem">Hvorfor VRM er kritisk</div>
+            </div>
+          </div>
+          <div aria-hidden="true">▸</div>
+        </button>
+        <div id="cpu-2" class="accordion-panel">
+          <div class="level overview">
+            <p>VRM omdanner 12V fra PSU til de lave spændinger CPU'en bruger. Uden stabil strøm fungerer CPU'en ikke korrekt.</p>
+          </div>
+
+          <div class="level intermediate">
+            <p>VRM består af faser med MOSFETs, spoler og kondensatorer. Flere faser og bedre komponenter giver renere strøm, mindre varme og bedre stabilitet under belastning.</p>
+          </div>
+
+          <div class="level advanced">
+            <p>Teknisk: VRM‑controller styrer PWM, current balancing og transientrespons. Valg af MOSFET (lav Rds(on)), choke‑værdi og kondensator‑type (MLCC vs polymer) påvirker ripple og effektivitet. Layout (kort spor, korrekt via‑placering) reducerer tab og varme. For overclocking er VRM‑kvalitet ofte flaskehalsen.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="gpu" class="card" aria-labelledby="gpu-h">
+    <h2 id="gpu-h">GPU og PCIe</h2>
+
+    <div class="accordion">
+      <div class="accordion-item">
+        <button class="accordion-header" data-target="gpu-1" aria-expanded="false">
+          <div class="accordion-title">
+            <span class="icon">G</span>
+            <div>
+              <div style="font-weight:700">Hvordan GPU'en tilsluttes</div>
+              <div style="color:var(--muted); font-size:.95rem">PCIe x16, båndbredde og kommunikation</div>
+            </div>
+          </div>
+          <div aria-hidden="true">▸</div>
+        </button>
+        <div id="gpu-1" class="accordion-panel">
+          <div class="level overview">
+            <p>GPU'en monteres i et PCIe x16‑slot. Den modtager data fra CPU og systemhukommelse for at lave grafik og beregninger.</p>
+          </div>
+
+          <div class="level intermediate">
+            <p>PCIe‑baner er punkt‑til‑punkt. Et x16‑slot kan levere høj båndbredde (afhænger af PCIe‑generation). GPU'en bruger sit eget VRAM til hurtig adgang, men kommunikerer med CPU for instruktioner og data.</p>
+            <ul>
+              <li><strong>PCIe generation:</strong> 3.0/4.0/5.0 påvirker throughput.</li>
+              <li><strong>Direkte til CPU:</strong> GPU‑slotet er ofte forbundet direkte til CPU for lav latens.</li>
+            </ul>
+          </div>
+
+          <div class="level advanced">
+            <p>Teknisk: Hver PCIe‑lane er et differentialt par; routing og impedanskontrol er kritisk for signalintegritet ved høje hastigheder. GPU'er kan bruge peer‑to‑peer DMA til at flytte data direkte mellem enheder (f.eks. GPU ↔ NVMe) hvis platformen og firmware understøtter det. Strøm til GPU leveres primært fra PSU via 6/8‑pin PCIe‑strømstik; motherboardet leverer kun slot‑strøm (typisk 75W).</p>
+            <p class="note">Praktisk: Hvis du bruger flere GPU'er eller andre PCIe‑enheder, skal du være opmærksom på hvor mange baner CPU og chipset kan levere.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="diagram" aria-hidden="true">
+      <div class="chip">CPU</div>
+      <div class="link-line" style="width:200px"></div>
+      <div class="chip">GPU</div>
+    </div>
+  </section>
+
+  <section id="ram" class="card" aria-labelledby="ram-h">
+    <h2 id="ram-h">RAM og memory channels</h2>
+
+    <div class="accordion">
+      <div class="accordion-item">
+        <button class="accordion-header" data-target="ram-1" aria-expanded="false">
+          <div class="accordion-title">
+            <span class="icon">R</span>
+            <div>
+              <div style="font-weight:700">Hvordan RAM arbejder med CPU</div>
+              <div style="color:var(--muted); font-size:.95rem">Kanaler, hastighed og timings</div>
+            </div>
+          </div>
+          <div aria-hidden="true">▸</div>
+        </button>
+        <div id="ram-1" class="accordion-panel">
+          <div class="level overview">
+            <p>RAM er korttidshukommelsen. CPU'en læser og skriver data i RAM meget hurtigere end fra lager.</p>
+          </div>
+
+          <div class="level intermediate">
+            <p>Memory controlleren i CPU'en styrer RAM via kanaler (dual/quad). Højere frekvens og lavere latency forbedrer ydeevne i mange opgaver.</p>
+          </div>
+
+          <div class="level advanced">
+            <p>Teknisk: Spor til DIMM‑slots matches i længde for at sikre timing; topologi (fly‑by vs T‑topologi) afhænger af platform. XMP/EXPO profiler i BIOS/UEFI kan aktivere højere frekvenser. Signalintegritet, termination og power delivery (VDD, VDDQ) er kritiske for stabil drift ved høje hastigheder.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="storage" class="card" aria-labelledby="storage-h">
+    <h2 id="storage-h">Lager: HDD, SATA SSD og NVMe</h2>
+
+    <div class="accordion">
+      <div class="accordion-item">
+        <button class="accordion-header" data-target="storage-1" aria-expanded="false">
+          <div class="accordion-title">
+            <span class="icon">S</span>
+            <div>
+              <div style="font-weight:700">Forskelle mellem HDD, SATA SSD og NVMe</div>
+              <div style="color:var(--muted); font-size:.95rem">Protokoller, hastighed og tilslutning</div>
+            </div>
+          </div>
+          <div aria-hidden="true">▸</div>
+        </button>
+        <div id="storage-1" class="accordion-panel">
+          <div class="level overview">
+            <p>HDD er mekanisk og langsommere. SATA SSD er hurtigere. NVMe (M.2) er hurtigst og bruger PCIe‑baner.</p>
+          </div>
+
+          <div class="level intermediate">
+            <p>SATA‑enheder kommunikerer via chipset (SATA‑controller). NVMe‑drev bruger PCIe‑baner og kan være forbundet direkte til CPU eller via chipset afhængigt af platform.</p>
+            <ul>
+              <li><strong>SATA:</strong> op til ~600 MB/s.</li>
+              <li><strong>NVMe PCIe 3.0/4.0/5.0:</strong> flere GB/s afhængigt af generation og antal lanes.</li>
+            </ul>
+          </div>
+
+          <div class="level advanced">
+            <p>Teknisk: NVMe‑protokollen bruger multiple submission/completion queues for lav latens og høj parallelisme. På nogle boards deler M.2‑slots PCIe‑baner med SATA‑porte eller PCIe‑slots; aktivering af et NVMe‑drev kan deaktivere andre porte. Termisk throttling på M.2‑drev kan reducere ydelse; derfor anvendes ofte heatsinks eller køleplader.</p>
+            <p class="note">Praktisk: Til store arbejdsbelastninger (video, databaser) giver NVMe stor fordel; til arkivlagring kan HDD stadig være relevant pga. pris pr. GB.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="diagram" aria-hidden="true">
+      <div class="chip">CPU</div>
+      <div class="link-line"></div>
+      <div class="chip">Chipset</div>
+      <div class="link-line" style="width:120px"></div>
+      <div class="chip">SATA / NVMe</div>
+    </div>
+  </section>
+
+  <section id="power" class="card" aria-labelledby="power-h">
+    <h2 id="power-h">VRM, chipset og BIOS/UEFI</h2>
+
+    <div class="accordion">
+      <div class="accordion-item">
+        <button class="accordion-header" data-target="power-1" aria-expanded="false">
+          <div class="accordion-title">
+            <span class="icon">P</span>
+            <div>
+              <div style="font-weight:700">Chipsetets rolle</div>
+              <div style="color:var(--muted); font-size:.95rem">I/O, SATA, USB og ekstra PCIe</div>
+            </div>
+          </div>
+          <div aria-hidden="true">▸</div>
+        </button>
+        <div id="power-1" class="accordion-panel">
+          <div class="level overview">
+            <p>Chipsettet fungerer som I/O‑hub for langsommere enheder og ekstra porte.</p>
+          </div>
+
+          <div class="level intermediate">
+            <p>Chipset kommunikerer med CPU via en højhastighedslink (f.eks. DMI). Det leverer USB, SATA, ekstra PCIe‑baner og ofte integreret lyd og netværk.</p>
+          </div>
+
+          <div class="level advanced">
+            <p>Teknisk: Chipset kan indeholde flere root complexes og controllers. Moderne platforme flytter mange funktioner ind i CPU'en, hvilket ændrer chipsetets rolle til primært at håndtere periferi og lavhastighedsprotokoller.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header" data-target="power-2" aria-expanded="false">
+          <div class="accordion-title">
+            <span class="icon">U</span>
+            <div>
+              <div style="font-weight:700">BIOS/UEFI og opstart</div>
+              <div style="color:var(--muted); font-size:.95rem">Initialisering, firmware og sikkerhed</div>
+            </div>
+          </div>
+          <div aria-hidden="true">▸</div>
+        </button>
+        <div id="power-2" class="accordion-panel">
+          <div class="level overview">
+            <p>BIOS/UEFI starter systemet, initialiserer hardware og loader operativsystemet.</p>
+          </div>
+
+          <div class="level intermediate">
+            <p>UEFI tilbyder moderne funktioner som Secure Boot, grafisk interface og understøttelse af store diske. Firmwareopdateringer kan forbedre kompatibilitet og sikkerhed.</p>
+          </div>
+
+          <div class="level advanced">
+            <p>Teknisk: UEFI udfører device enumeration, memory training og initialiserer controllers. Secure Boot og TPM kan sikre opstartsintegritet. Firmwareopdateringer bør være signed for at undgå kompromittering; enterprise‑systemer bruger measured boot og remote attestation for at validere systemtilstand.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="build" class="card" aria-labelledby="build-h">
+    <h2 id="build-h">Praktiske byggetips og samspilsråd</h2>
+
+    <div class="accordion">
+      <div class="accordion-item">
+        <button class="accordion-header" data-target="build-1" aria-expanded="false">
+          <div class="accordion-title">
+            <span class="icon">✓</span>
+            <div>
+              <div style="font-weight:700">Planlægning før køb</div>
+              <div style="color:var(--muted); font-size:.95rem">Sokel, VRM, M.2‑slots og formfaktor</div>
+            </div>
+          </div>
+          <div aria-hidden="true">▸</div>
+        </button>
+        <div id="build-1" class="accordion-panel">
+          <div class="level overview">
+            <p>Tjek at CPU og motherboard sokel passer, at PSU har nok strøm, og at kabinettet passer til formfaktoren.</p>
+          </div>
+
+          <div class="level intermediate">
+            <p>Vælg motherboard med VRM‑kvalitet der matcher din CPU. Tænk over antal M.2‑slots, PCIe‑baner og I/O‑behov. Overvej køling og airflow.</p>
+          </div>
+
+          <div class="level advanced">
+            <p>Teknisk: Beregn peak strømforbrug, vælg PSU med passende 12V‑rails og effektreserve. Planlæg kabelrouting for optimal airflow. For kompakte builds, vælg M.2‑drev med god termisk løsning og overvej undervolt/effektstyring for at holde temperaturer nede.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header" data-target="build-2" aria-expanded="false">
+          <div class="accordion-title">
+            <span class="icon">⚠</span>
+            <div>
+              <div style="font-weight:700">Fejlfinding</div>
+              <div style="color:var(--muted); font-size:.95rem">POST‑koder, reseat og minimal konfiguration</div>
+            </div>
+          </div>
+          <div aria-hidden="true">▸</div>
+        </button>
+        <div id="build-2" class="accordion-panel">
+          <div class="level overview">
+            <p>Hvis systemet ikke starter, tjek strøm, kabler og at CPU/RAM er korrekt monteret.</p>
+          </div>
+
+          <div class="level intermediate">
+            <p>Brug POST‑koder, Q‑LED eller beep‑koder. Start med minimum hardware (CPU, 1 RAM, GPU hvis nødvendig) for at isolere problemet.</p>
+          </div>
+
+          <div class="level advanced">
+            <p>Teknisk: Test RAM i forskellige slots, opdater BIOS hvis nødvendigt, brug kendt god PSU. For servere kan BMC/logs give detaljeret diagnostik. Husk ESD‑sikkerhed ved håndtering af komponenter.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Right column: sidebar -->
+  <aside class="card" aria-labelledby="side-h">
+    <h3 id="side-h">Indholdsoversigt</h3>
+    <nav aria-label="Indholdsoversigt">
+      <a href="#overview">Oversigt</a><br/>
+      <a href="#cpu">CPU</a><br/>
+      <a href="#gpu">GPU</a><br/>
+      <a href="#ram">RAM</a><br/>
+      <a href="#storage">Lager</a><br/>
+      <a href="#power">VRM & Chipset</a><br/>
+      <a href="#build">Byggetips</a>
+    </nav>
+
+    <h3 style="margin-top:1rem">Globalt læseniveau</h3>
+    <p class="lead">Skift alle sektioner til samme niveau</p>
+    <div style="display:flex; gap:.5rem; margin-top:.5rem">
+      <button class="btn active" data-global="overview">Oversigt</button>
+      <button class="btn" data-global="intermediate">Mellem</button>
+      <button class="btn" data-global="advanced">Avanceret</button>
+    </div>
+
+    <h3 style="margin-top:1rem">Kort glossar</h3>
+    <dl class="glossary">
+      <dt>PCIe</dt><dd>Højhastighedsbus til GPU og NVMe.</dd>
+      <dt>VRM</dt><dd>Strømkonvertering til CPU/RAM.</dd>
+      <dt>NVMe</dt><dd>Hurtig SSD‑protokol over PCIe.</dd>
+      <dt>UEFI</dt><dd>Moderne firmware til opstart og hardware‑initialisering.</dd>
+    </dl>
+
+    <div class="note">Vil du have denne side med billeder af et motherboard, klikbare hotspots eller en print‑venlig version? Skriv hvilken variant du foretrækker.</div>
+  </aside>
+
+  <footer>
+    Forklaring opdelt i tre niveauer for at gøre det nemt at lære og dykke ned i tekniske detaljer.
+  </footer>
+</main>
+
+<script>
+  // Accordion toggle
+  document.querySelectorAll('.accordion-header').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const target = document.getElementById(btn.dataset.target);
+      const isOpen = target.classList.contains('open');
+      // close sibling panels in same card
+      const card = btn.closest('.card');
+      card.querySelectorAll('.accordion-panel').forEach(p=>p.classList.remove('open'));
+      card.querySelectorAll('.accordion-header').forEach(h=>h.setAttribute('aria-expanded','false'));
+      if(!isOpen){
+        target.classList.add('open');
+        btn.setAttribute('aria-expanded','true');
+      }
+    });
+    btn.addEventListener('keydown', e=>{
+      if(e.key==='Enter' || e.key===' '){ e.preventDefault(); btn.click(); }
+    });
+  });
+
+  // Per-card detail buttons
+  document.querySelectorAll('.card .btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const level = btn.dataset.level;
+      if(!level) return;
+      const card = btn.closest('.card');
+      card.querySelectorAll('.btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      // hide/show levels inside this card
+      card.querySelectorAll('.level').forEach(el=>el.style.display='none');
+      card.querySelectorAll('.level.overview').forEach(el=>el.style.display='block');
+      if(level==='intermediate') card.querySelectorAll('.level.intermediate').forEach(el=>el.style.display='block');
+      if(level==='advanced') card.querySelectorAll('.level.intermediate, .level.advanced').forEach(el=>el.style.display='block');
+    });
+  });
+
+  // Global level buttons
+  document.querySelectorAll('[data-global]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const level = btn.dataset.global;
+      document.querySelectorAll('[data-global]').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      // set all cards
+      document.querySelectorAll('.card').forEach(card=>{
+        // set local control if present
+        const localBtn = card.querySelector('.detail-controls .btn[data-level="'+level+'"]') || card.querySelector('.btn[data-level="'+level+'"]');
+        card.querySelectorAll('.btn').forEach(b=>b.classList.remove('active'));
+        if(localBtn) localBtn.classList.add('active');
+        // hide/show content
+        card.querySelectorAll('.level').forEach(el=>el.style.display='none');
+        card.querySelectorAll('.level.overview').forEach(el=>el.style.display='block');
+        if(level==='intermediate') card.querySelectorAll('.level.intermediate').forEach(el=>el.style.display='block');
+        if(level==='advanced') card.querySelectorAll('.level.intermediate, .level.advanced').forEach(el=>el.style.display='block');
+      });
+    });
+  });
+
+  // Initialize default global level = overview
+  document.querySelectorAll('.card').forEach(card=>{
+    card.querySelectorAll('.level').forEach(el=>el.style.display='none');
+    card.querySelectorAll('.level.overview').forEach(el=>el.style.display='block');
+  });
+
+  // Smooth scrolling for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click', e=>{
+      const target = document.querySelector(a.getAttribute('href'));
+      if(target){
+        e.preventDefault();
+        target.scrollIntoView({behavior:'smooth', block:'start'});
+        target.setAttribute('tabindex','-1'); target.focus({preventScroll:true});
+      }
+    });
+  });
+</script>
+</body>
+</html>
