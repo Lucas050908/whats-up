@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prøve – Motherboard og komponenter</title>
+
+<style>
+:root{
+  --bg:#071021;
+  --card:#0c1320;
+  --text:#e6eef6;
+  --muted:#9fb0bf;
+  --accent:#4fd1c5;
+  --accent2:#79c0ff;
+  --radius:12px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter,system-ui,Segoe UI,Arial;
+  background:linear-gradient(180deg,#04101a,#071018);
+  color:var(--text);
+}
+header{
+  text-align:center;
+  padding:2rem 1rem;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+header h1{color:var(--accent2);margin:0}
+header p{color:var(--muted)}
+
+main{
+  max-width:1000px;
+  margin:2rem auto;
+  padding:0 1rem;
+}
+
+.card{
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:var(--radius);
+  padding:1.2rem;
+  border:1px solid rgba(255,255,255,.04);
+  box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+
+.question{
+  margin-bottom:1rem;
+  padding:1rem;
+  border-radius:10px;
+  background:#071826;
+  border:1px solid rgba(255,255,255,.05);
+}
+.question strong{color:var(--accent)}
+
+label{
+  display:block;
+  margin:.3rem 0;
+  cursor:pointer;
+}
+
+button{
+  padding:.6rem 1.2rem;
+  border-radius:10px;
+  border:none;
+  background:var(--accent);
+  color:#042022;
+  font-weight:700;
+  cursor:pointer;
+}
+button:hover{opacity:.9}
+
+#result{
+  margin-top:1.5rem;
+  font-size:1.2rem;
+  text-align:center;
+}
+.pass{color:var(--accent);font-weight:700}
+.fail{color:#ff6b6b;font-weight:700}
+
+.note{
+  background:#071826;
+  border-left:4px solid var(--accent);
+  padding:.6rem;
+  border-radius:6px;
+  margin-bottom:1rem;
+  color:var(--muted);
+}
+
+footer{
+  text-align:center;
+  margin-top:2rem;
+  color:var(--muted);
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Prøve — Motherboard og komponenter</h1>
+  <p>Svar på alle spørgsmål og tryk “Tjek svar”</p>
+</header>
+
+<main>
+<div class="card">
+
+<div class="note">
+🎓 <strong>Vejledning:</strong>  
+Du skal have mindst <strong>75%</strong> rigtige for at bestå.
+</div>
+
+<form id="quizForm">
+
+<div class="question">
+<strong>1.</strong> CPU'en er computerens “hjerne”.
+<label><input type="radio" name="q1" value="Ja"> Ja</label>
+<label><input type="radio" name="q1" value="Nej"> Nej</label>
+</div>
+
+<div class="question">
+<strong>2.</strong> GPU'en sidder i et PCIe-slot.
+<label><input type="radio" name="q2" value="Ja"> Ja</label>
+<label><input type="radio" name="q2" value="Nej"> Nej</label>
+</div>
+
+<div class="question">
+<strong>3.</strong> RAM gemmer data permanent.
+<label><input type="radio" name="q3" value="Ja"> Ja</label>
+<label><input type="radio" name="q3" value="Nej"> Nej</label>
+</div>
+
+<div class="question">
+<strong>4.</strong> VRM leverer strøm til CPU og RAM.
+<label><input type="radio" name="q4" value="Ja"> Ja</label>
+<label><input type="radio" name="q4" value="Nej"> Nej</label>
+</div>
+
+<div class="question">
+<strong>5.</strong> BIOS/UEFI starter systemet og initialiserer hardware.
+<label><input type="radio" name="q5" value="Ja"> Ja</label>
+<label><input type="radio" name="q5" value="Nej"> Nej</label>
+</div>
+
+<div class="question">
+<strong>6.</strong> Hvilken lagertype er hurtigst?
+<label><input type="radio" name="q6" value="HDD"> HDD</label>
+<label><input type="radio" name="q6" value="SATA SSD"> SATA SSD</label>
+<label><input type="radio" name="q6" value="NVMe SSD"> NVMe SSD</label>
+</div>
+
+<div class="question">
+<strong>7.</strong> Hvad gør chipset på et motherboard?
+<label><input type="radio" name="q7" value="Forbinder langsommere enheder"> Forbinder langsommere enheder</label>
+<label><input type="radio" name="q7" value="Producerer grafik"> Producerer grafik</label>
+<label><input type="radio" name="q7" value="Gemmer data permanent"> Gemmer data permanent</label>
+</div>
+
+<div class="question">
+<strong>8.</strong> Hvilken komponent indeholder VRAM?
+<label><input type="radio" name="q8" value="CPU"> CPU</label>
+<label><input type="radio" name="q8" value="GPU"> GPU</label>
+<label><input type="radio" name="q8" value="RAM"> RAM</label>
+</div>
+
+<div class="question">
+<strong>9.</strong> Hvilken teknologi bruger HDD?
+<label><input type="radio" name="q9" value="Mekaniske plader"> Mekaniske plader</label>
+<label><input type="radio" name="q9" value="Flash hukommelse"> Flash hukommelse</label>
+<label><input type="radio" name="q9" value="PCIe lanes"> PCIe lanes</label>
+</div>
+
+<div class="question">
+<strong>10.</strong> Hvad betyder XMP/EXPO profiler?
+<label><input type="radio" name="q10" value="RAM overclocking"> RAM overclocking</label>
+<label><input type="radio" name="q10" value="GPU køling"> GPU køling</label>
+<label><input type="radio" name="q10" value="CPU strømstyring"> CPU strømstyring</label>
+</div>
+
+<div style="text-align:center">
+<button type="button" onclick="checkAnswers()">Tjek svar</button>
+</div>
+
+</form>
+
+<div id="result"></div>
+
+</div>
+
+<footer>
+Motherboard-prøve · Samme design som teorisiden
+</footer>
+</main>
+
+<script>
+function checkAnswers(){
+  const correct={
+    q1:"Ja",
+    q2:"Ja",
+    q3:"Nej",
+    q4:"Ja",
+    q5:"Ja",
+    q6:"NVMe SSD",
+    q7:"Forbinder langsommere enheder",
+    q8:"GPU",
+    q9:"Mekaniske plader",
+    q10:"RAM overclocking"
+  };
+
+  let score=0;
+  const total=Object.keys(correct).length;
+
+  for(const q in correct){
+    document.getElementsByName(q).forEach(r=>{
+      if(r.checked && r.value===correct[q]) score++;
+    });
+  }
+
+  const percent=Math.round((score/total)*100);
+  document.getElementById("result").innerHTML =
+    percent>=75
+    ? `<span class="pass">✅ Du fik ${score}/${total} rigtige (${percent}%). Du bestod!</span>`
+    : `<span class="fail">❌ Du fik ${score}/${total} rigtige (${percent}%). Du bestod ikke.</span>`;
+}
+</script>
+
+</body>
+</html>
