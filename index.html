@@ -136,7 +136,7 @@
           </div>
 
           <div class="level intermediate">
-            <p>Moderne CPU'er har indbygget memory controller (DDR4/DDR5) og ofte PCIe‑controller. Memory controlleren taler direkte med RAM via DIMM‑slots; PCIe‑controlleren leverer baner til GPU og NVMe.</p>
+            <p>Moderne CPU'er har indbygget memory controller (DDR4/DDR5) og ofte PCIe-controller. Memory controlleren taler direkte med RAM via DIMM-slots; PCIe-controlleren leverer baner til GPU og NVMe.</p>
             <ul>
               <li><strong>Direkte links:</strong> CPU ↔ RAM (memory channels).</li>
               <li><strong>Højhastighedslinks:</strong> CPU ↔ GPU/NVMe via PCIe lanes.</li>
@@ -146,7 +146,7 @@
 
           <div class="level advanced">
             <p>Teknisk: Soklens pads fører power rails (Vcore, VccIO), differential pairs for højhastighedslinks og kontrolsignaler (reset, clock, SMBus). Memory training ved opstart sikrer timing mellem CPU og RAM; dette håndteres af BIOS/UEFI og memory controlleren. CPU'en kan også integrere PCIe root complexes og offload-funktioner (f.eks. NVMe controller logik).</p>
-            <p class="note">Praktisk konsekvens: Sokeltype og CPU‑generation bestemmer hvilke motherboard‑features (DDR‑type, PCIe‑generation) du kan bruge.</p>
+            <p class="note">Praktisk konsekvens: Sokeltype og CPU-generation bestemmer hvilke motherboard-features (DDR-type, PCIe-generation) du kan bruge.</p>
           </div>
         </div>
       </div>
@@ -172,10 +172,15 @@
           </div>
 
           <div class="level advanced">
-            <p>Teknisk: VRM‑controller styrer PWM, current balancing og transientrespons. Valg af MOSFET (lav Rds(on)), choke‑værdi og kondensator‑type (MLCC vs polymer) påvirker ripple og effektivitet. Layout (kort spor, korrekt via‑placering) reducerer tab og varme. For overclocking er VRM‑kvalitet ofte flaskehalsen.</p>
+            <p>Teknisk: VRM-controller styrer PWM, current balancing og transientrespons. Valg af MOSFET (lav Rds(on)), choke-værdi og kondensator-type (MLCC vs polymer) påvirker ripple og effektivitet. Layout (kort spor, korrekt via-placering) reducerer tab og varme. For overclocking er VRM-kvalitet ofte flaskehalsen.</p>
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- ★ NYT: KVANTE CPU KNAP -->
+    <div style="margin-top:1rem;">
+      <button class="btn" id="openQuantumPopup">Kvante-CPU</button>
     </div>
   </section>
 
@@ -196,20 +201,20 @@
         </button>
         <div id="gpu-1" class="accordion-panel">
           <div class="level overview">
-            <p>GPU'en monteres i et PCIe x16‑slot. Den modtager data fra CPU og systemhukommelse for at lave grafik og beregninger.</p>
+            <p>GPU'en monteres i et PCIe x16-slot. Den modtager data fra CPU og systemhukommelse for at lave grafik og beregninger.</p>
           </div>
 
           <div class="level intermediate">
-            <p>PCIe‑baner er punkt‑til‑punkt. Et x16‑slot kan levere høj båndbredde (afhænger af PCIe‑generation). GPU'en bruger sit eget VRAM til hurtig adgang, men kommunikerer med CPU for instruktioner og data.</p>
+            <p>PCIe-baner er punkt-til-punkt. Et x16-slot kan levere høj båndbredde (afhænger af PCIe-generation). GPU'en bruger sit eget VRAM til hurtig adgang, men kommunikerer med CPU for instruktioner og data.</p>
             <ul>
               <li><strong>PCIe generation:</strong> 3.0/4.0/5.0 påvirker throughput.</li>
-              <li><strong>Direkte til CPU:</strong> GPU‑slotet er ofte forbundet direkte til CPU for lav latens.</li>
+              <li><strong>Direkte til CPU:</strong> GPU-slotet er ofte forbundet direkte til CPU for lav latens.</li>
             </ul>
           </div>
 
           <div class="level advanced">
-            <p>Teknisk: Hver PCIe‑lane er et differentialt par; routing og impedanskontrol er kritisk for signalintegritet ved høje hastigheder. GPU'er kan bruge peer‑to‑peer DMA til at flytte data direkte mellem enheder (f.eks. GPU ↔ NVMe) hvis platformen og firmware understøtter det. Strøm til GPU leveres primært fra PSU via 6/8‑pin PCIe‑strømstik; motherboardet leverer kun slot‑strøm (typisk 75W).</p>
-            <p class="note">Praktisk: Hvis du bruger flere GPU'er eller andre PCIe‑enheder, skal du være opmærksom på hvor mange baner CPU og chipset kan levere.</p>
+            <p>Teknisk: Hver PCIe-lane er et differentialt par; routing og impedanskontrol er kritisk for signalintegritet ved høje hastigheder. GPU'er kan bruge peer-to-peer DMA til at flytte data direkte mellem enheder (f.eks. GPU ↔ NVMe) hvis platformen og firmware understøtter det. Strøm til GPU leveres primært fra PSU via 6/8-pin PCIe-strømstik; motherboardet leverer kun slot-strøm (typisk 75W).</p>
+            <p class="note">Praktisk: Hvis du bruger flere GPU'er eller andre PCIe-enheder, skal du være opmærksom på hvor mange baner CPU og chipset kan levere.</p>
           </div>
         </div>
       </div>
@@ -247,7 +252,7 @@
           </div>
 
           <div class="level advanced">
-            <p>Teknisk: Spor til DIMM‑slots matches i længde for at sikre timing; topologi (fly‑by vs T‑topologi) afhænger af platform. XMP/EXPO profiler i BIOS/UEFI kan aktivere højere frekvenser. Signalintegritet, termination og power delivery (VDD, VDDQ) er kritiske for stabil drift ved høje hastigheder.</p>
+            <p>Teknisk: Spor til DIMM-slots matches i længde for at sikre timing; topologi (fly-by vs T-topologi) afhænger af platform. XMP/EXPO profiler i BIOS/UEFI kan aktivere højere frekvenser. Signalintegritet, termination og power delivery (VDD, VDDQ) er kritiske for stabil drift ved høje hastigheder.</p>
           </div>
         </div>
       </div>
@@ -271,11 +276,11 @@
         </button>
         <div id="storage-1" class="accordion-panel">
           <div class="level overview">
-            <p>HDD er mekanisk og langsommere. SATA SSD er hurtigere. NVMe (M.2) er hurtigst og bruger PCIe‑baner.</p>
+            <p>HDD er mekanisk og langsommere. SATA SSD er hurtigere. NVMe (M.2) er hurtigst og bruger PCIe-baner.</p>
           </div>
 
           <div class="level intermediate">
-            <p>SATA‑enheder kommunikerer via chipset (SATA‑controller). NVMe‑drev bruger PCIe‑baner og kan være forbundet direkte til CPU eller via chipset afhængigt af platform.</p>
+            <p>SATA-enheder kommunikerer via chipset (SATA-controller). NVMe-drev bruger PCIe-baner og kan være forbundet direkte til CPU eller via chipset afhængigt af platform.</p>
             <ul>
               <li><strong>SATA:</strong> op til ~600 MB/s.</li>
               <li><strong>NVMe PCIe 3.0/4.0/5.0:</strong> flere GB/s afhængigt af generation og antal lanes.</li>
@@ -283,7 +288,7 @@
           </div>
 
           <div class="level advanced">
-            <p>Teknisk: NVMe‑protokollen bruger multiple submission/completion queues for lav latens og høj parallelisme. På nogle boards deler M.2‑slots PCIe‑baner med SATA‑porte eller PCIe‑slots; aktivering af et NVMe‑drev kan deaktivere andre porte. Termisk throttling på M.2‑drev kan reducere ydelse; derfor anvendes ofte heatsinks eller køleplader.</p>
+            <p>Teknisk: NVMe-protokollen bruger multiple submission/completion queues for lav latens og høj parallelisme. På nogle boards deler M.2-slots PCIe-baner med SATA-porte eller PCIe-slots; aktivering af et NVMe-drev kan deaktivere andre porte. Termisk throttling på M.2-drev kan reducere ydelse; derfor anvendes ofte heatsinks eller køleplader.</p>
             <p class="note">Praktisk: Til store arbejdsbelastninger (video, databaser) giver NVMe stor fordel; til arkivlagring kan HDD stadig være relevant pga. pris pr. GB.</p>
           </div>
         </div>
@@ -316,11 +321,11 @@
         </button>
         <div id="power-1" class="accordion-panel">
           <div class="level overview">
-            <p>Chipsettet fungerer som I/O‑hub for langsommere enheder og ekstra porte.</p>
+            <p>Chipsettet fungerer som I/O-hub for langsommere enheder og ekstra porte.</p>
           </div>
 
           <div class="level intermediate">
-            <p>Chipset kommunikerer med CPU via en højhastighedslink (f.eks. DMI). Det leverer USB, SATA, ekstra PCIe‑baner og ofte integreret lyd og netværk.</p>
+            <p>Chipset kommunikerer med CPU via en højhastighedslink (f.eks. DMI). Det leverer USB, SATA, ekstra PCIe-baner og ofte integreret lyd og netværk.</p>
           </div>
 
           <div class="level advanced">
@@ -350,7 +355,7 @@
           </div>
 
           <div class="level advanced">
-            <p>Teknisk: UEFI udfører device enumeration, memory training og initialiserer controllers. Secure Boot og TPM kan sikre opstartsintegritet. Firmwareopdateringer bør være signed for at undgå kompromittering; enterprise‑systemer bruger measured boot og remote attestation for at validere systemtilstand.</p>
+            <p>Teknisk: UEFI udfører device enumeration, memory training og initialiserer controllers. Secure Boot og TPM kan sikre opstartsintegritet. Firmwareopdateringer bør være signed for at undgå kompromittering; enterprise-systemer bruger measured boot og remote attestation for at validere systemtilstand.</p>
           </div>
         </div>
       </div>
@@ -367,7 +372,7 @@
             <span class="icon">✓</span>
             <div>
               <div style="font-weight:700">Planlægning før køb</div>
-              <div style="color:var(--muted); font-size:.95rem">Sokel, VRM, M.2‑slots og formfaktor</div>
+              <div style="color:var(--muted); font-size:.95rem">Sokel, VRM, M.2-slots og formfaktor</div>
             </div>
           </div>
           <div aria-hidden="true">▸</div>
@@ -378,11 +383,11 @@
           </div>
 
           <div class="level intermediate">
-            <p>Vælg motherboard med VRM‑kvalitet der matcher din CPU. Tænk over antal M.2‑slots, PCIe‑baner og I/O‑behov. Overvej køling og airflow.</p>
+            <p>Vælg motherboard med VRM-kvalitet der matcher din CPU. Tænk over antal M.2-slots, PCIe-baner og I/O-behov. Overvej køling og airflow.</p>
           </div>
 
           <div class="level advanced">
-            <p>Teknisk: Beregn peak strømforbrug, vælg PSU med passende 12V‑rails og effektreserve. Planlæg kabelrouting for optimal airflow. For kompakte builds, vælg M.2‑drev med god termisk løsning og overvej undervolt/effektstyring for at holde temperaturer nede.</p>
+            <p>Teknisk: Beregn peak strømforbrug, vælg PSU med passende 12V-rails og effektreserve. Planlæg kabelrouting for optimal airflow. For kompakte builds, vælg M.2-drev med god termisk løsning og overvej undervolt/effektstyring for at holde temperaturer nede.</p>
           </div>
         </div>
       </div>
@@ -393,7 +398,7 @@
             <span class="icon">⚠</span>
             <div>
               <div style="font-weight:700">Fejlfinding</div>
-              <div style="color:var(--muted); font-size:.95rem">POST‑koder, reseat og minimal konfiguration</div>
+              <div style="color:var(--muted); font-size:.95rem">POST-koder, reseat og minimal konfiguration</div>
             </div>
           </div>
           <div aria-hidden="true">▸</div>
@@ -404,15 +409,40 @@
           </div>
 
           <div class="level intermediate">
-            <p>Brug POST‑koder, Q‑LED eller beep‑koder. Start med minimum hardware (CPU, 1 RAM, GPU hvis nødvendig) for at isolere problemet.</p>
+            <p>Brug POST-koder, Q-LED eller beep-koder. Start med minimum hardware (CPU, 1 RAM, GPU hvis nødvendig) for at isolere problemet.</p>
           </div>
 
           <div class="level advanced">
-            <p>Teknisk: Test RAM i forskellige slots, opdater BIOS hvis nødvendigt, brug kendt god PSU. For servere kan BMC/logs give detaljeret diagnostik. Husk ESD‑sikkerhed ved håndtering af komponenter.</p>
+            <p>Teknisk: Test RAM i forskellige slots, opdater BIOS hvis nødvendigt, brug kendt god PSU. For servere kan BMC/logs give detaljeret diagnostik. Husk ESD-sikkerhed ved håndtering af komponenter.</p>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- ★ HER ER DEN NYE BOKS DU BAD OM -->
+    <div class="card" style="margin-top:1rem;">
+      <h2>Top 5 ting du IKKE skal gøre, når du samler en PC</h2>
+
+      <ul style="margin:0; padding-left:1.1rem; color:var(--muted);">
+        <li><strong>Ignorer ikke manualen</strong> – især for motherboard, CPU og køler.</li>
+        <li><strong>Glem ikke at jorde dig</strong> – ESD kan ødelægge komponenter på et splitsekund.</li>
+        <li><strong>Træk ikke kabler tilfældigt</strong> – dårlig airflow = højere temperaturer og støj.</li>
+        <li><strong>Installer ikke RAM eller GPU forkert</strong> – dobbelttjek at de klikker helt på plads.</li>
+        <li><strong>Glem ikke BIOS/UEFI opdatering</strong> – især hvis du bruger nyere CPU eller RAM.</li>
+      </ul>
+
+      <div class="note" style="margin-top:0.8rem;">
+        <strong>Gode råd til sikker samling:</strong>
+        <ul style="margin:0.6rem 0 0 1.1rem;">
+          <li><strong>Undgå statisk elektricitet:</strong> Rør ved en metaloverflade eller brug et ESD-armbånd.</li>
+          <li><strong>Arbejd på et rent, tørt underlag:</strong> Undgå tæpper og syntetiske materialer.</li>
+          <li><strong>Vent med at sætte strøm til:</strong> Tænd først når du er færdig og har dobbelttjekket alt.</li>
+          <li><strong>Brug en radiator eller metalflade:</strong> Hvis du skal aflade statisk, kan en radiator eller metalbord være en god løsning.</li>
+          <li><strong>Hold komponenter i deres antistatiske emballager</strong> indtil de skal monteres.</li>
+        </ul>
+      </div>
+    </div>
+
   </section>
 
   <!-- Right column: sidebar -->
@@ -440,8 +470,8 @@
     <dl class="glossary">
       <dt>PCIe</dt><dd>Højhastighedsbus til GPU og NVMe.</dd>
       <dt>VRM</dt><dd>Strømkonvertering til CPU/RAM.</dd>
-      <dt>NVMe</dt><dd>Hurtig SSD‑protokol over PCIe.</dd>
-      <dt>UEFI</dt><dd>Moderne firmware til opstart og hardware‑initialisering.</dd>
+      <dt>NVMe</dt><dd>Hurtig SSD-protokol over PCIe.</dd>
+      <dt>UEFI</dt><dd>Moderne firmware til opstart og hardware-initialisering.</dd>
     </dl>
 
     <div class="note">Vil du Prøve at teste din viden så er der en quiz/prøve i bunden af hjemmesiden</div>
@@ -451,11 +481,116 @@
     Forklaring opdelt i tre niveauer for at gøre det nemt at lære og dykke ned i tekniske detaljer.
   </footer>
 
-    <a href="quiz.html">
-  <button>Gå til quiz-prøve</button>
-</a>
-  
+  <a href="quiz.html">
+    <button>Gå til quiz-prøve</button>
+  </a>
+
 </main>
+
+<!-- ★ NYT: POPUP / MODAL (MED DIN TEKST) -->
+<div id="quantumPopup" style="
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  z-index:9999;
+  align-items:center;
+  justify-content:center;
+">
+  <div style="
+    background:linear-gradient(180deg, rgba(12,19,32,0.95), rgba(12,19,32,0.95));
+    border-radius:12px;
+    padding:1.5rem;
+    max-width:900px;
+    width:90%;
+    position:relative;
+    overflow:auto;
+    max-height:90vh;
+  ">
+    <button id="closeQuantumPopup" class="btn" style="position:absolute;top:10px;right:10px;">
+      ✕
+    </button>
+
+    <div id="quantumPopupContent">
+
+      <h2 style="margin-top:0; color:var(--accent2)">Hvordan fungerer en kvante-CPU, og hvorfor er den revolutionerende?</h2>
+      <p class="lead">(med inspiration fra Michio Kaku: Quantum Supremacy)</p>
+
+      <h3 style="color:var(--accent)">Indledning</h3>
+      <p> I de seneste årtier har udviklingen af computere fulgt Moore’s lov, hvor antallet af transistorer på en chip fordobles cirka hvert andet år. Denne udvikling har gjort det, at vi i dag har supercomputere, der kan udføre milliarder af beregninger i sekundet. Men vi nærmer os nu en fysisk grænse for, hvor små og effektive transistorer kan blive. Når komponenterne i en klassisk computer når atomniveau, begynder kvantemekaniske effekter at spille ind, hvilket gør det stadig vanskeligere at fortsætte den traditionelle udvikling.</p>
+      <p>Her kommer kvantecomputeren, og især kvante-CPU’en, ind i billedet. Ifølge Michio Kaku står vi over for en teknologisk revolution. Kvantecomputere kan løse problemer, der i dag ville tage selv de kraftigste supercomputere millioner af år. Samtidig åbner de op for nye muligheder inden for medicin, materialeforskning, fysik og kunstig intelligens. Denne kombination af hastighed, parallellitet og potentiale for videnskabelige gennembrud gør kvantecomputeren til et af de mest transformative teknologiske fremskridt i menneskehedens historie.</p>
+      <p>Historisk set begyndte computerrevolutionen med de første mekaniske regnemaskiner i 1600-tallet, som senere blev fulgt af elektriske maskiner i 1900-tallet. Udviklingen af transistorer i 1947 revolutionerede elektronikverdenen og gjorde moderne computere mulige. Mikroprocessorer i 1970’erne gjorde computere tilgængelige for private husholdninger og små virksomheder. Kvantecomputere er næste skridt i denne lange udvikling – en helt ny måde at tænke beregning på, der bygger på principper fra kvantemekanik, frem for klassisk elektronik.</p>
+
+      <h3 style="color:var(--accent)">Klassisk CPU vs. kvante-CPU</h3>
+      <p>En klassisk CPU arbejder med bits, som kun kan være 0 eller 1. Hele den digitale verden – fra smartphones til internettets infrastruktur – bygger på denne simple logik. Selv om bits kan kombineres i enorme mængder, er de bundet til en lineær måde at behandle data på. Dette betyder, at selv de mest avancerede klassiske supercomputere kan have svært ved komplekse opgaver, der kræver samtidig behandling af mange muligheder.</p>
+      <p>En kvante-CPU bruger derimod qubits, som kan eksistere i en tilstand kaldet superposition, hvor de repræsenterer både 0 og 1 samtidigt. Dette gør det muligt for kvantecomputeren at behandle et stort antal muligheder parallelt.</p>
+      <p>To andre vigtige egenskaber er:</p>
+      <ul>
+        <li><strong>Entanglement (sammenfiltring):</strong> Qubits kan kobles sammen, så tilstanden af én qubit afhænger af en anden, selv på afstand. Dette muliggør ekstremt komplekse og koordinerede beregninger.</li>
+        <li><strong>Interferens:</strong> Computeren kan forstærke de mest sandsynlige løsninger og eliminere de mindre sandsynlige, hvilket effektivt leder beregningen mod det rigtige svar.</li>
+      </ul>
+      <p>Disse egenskaber betyder, at kvantecomputere kan udforske et uendeligt stort “landskab” af muligheder på én gang. Klassiske computere, derimod, må undersøge én løsning ad gangen, hvilket gør dem langsommere ved visse komplekse opgaver.</p>
+      <p>For at gøre det mere konkret kan man forestille sig at skulle finde en vej gennem en labyrint. En klassisk computer går vej for vej, mens en kvantecomputer kan prøve alle stier på én gang og hurtigt finde den bedste løsning. Dette illustrerer den enorme forskel i effektivitet mellem de to teknologier.</p>
+
+      <h3 style="color:var(--accent)">Hvordan fungerer beregninger i en kvante-CPU?</h3>
+      <p>For at manipulere qubits bruges kvanteporte, som kan sammenlignes med de logiske porte i klassiske computere, men med langt større kompleksitet.</p>
+      <ul>
+        <li><strong>Hadamard-porten:</strong> Sætter en qubit i superposition og giver computeren mulighed for at arbejde med mange løsninger samtidigt.</li>
+        <li><strong>Pauli-X-porten:</strong> Fungerer som en klassisk NOT-port og bytter værdien af qubits.</li>
+        <li><strong>CNOT-porten:</strong> Forbinder to qubits gennem entanglement, så ændringen af én påvirker den anden.</li>
+      </ul>
+      <p>Når en kvantealgoritme udføres, manipuleres qubitternes sandsynligheder. Først når systemet måles, kollapser qubits til et bestemt resultat. Dette betyder, at kvantecomputere ikke bare beregner ét svar på én gang, men arbejder med sandsynligheder for at finde det mest korrekte resultat.</p>
+      <p>Denne tilgang gør kvantecomputeren ekstremt fleksibel og effektiv til problemer, der involverer store datasæt, komplekse optimeringer eller simuleringer af naturlige processer. For eksempel kan man simulere molekylers elektronstruktur for at udvikle nye lægemidler, noget som ville tage årtier for en klassisk supercomputer, men timer på en kvantecomputer.</p>
+
+      <h3 style="color:var(--accent)">Hvorfor skal kvante-CPU’er være ekstremt kolde?</h3>
+      <p>Qubits er yderst skrøbelige. Selv små temperaturændringer, vibrationer eller elektromagnetiske signaler kan få dem til at miste superpositionen, en proces kaldet dekoherens. Hvis dekoherens indtræffer midt i en beregning, kan resultatet blive helt forkert.</p>
+      <p>For at forhindre dette placeres kvante-CPU’er i kryogeniske kølesystemer tæt på det absolutte nulpunkt (-273 °C). I denne tilstand bevæger atomer sig næsten ikke, hvilket skaber stabilitet for qubits. Dette ekstremt kontrollerede miljø gør det muligt at udføre komplekse beregninger, der ellers ville være umulige.</p>
+
+      <h3 style="color:var(--accent)">Kvantealgoritmer – hjertet i kvanteberegning</h3>
+      <p>Selve hardwaren er kun én del af kvantecomputeren. Algoritmerne, der udnytter qubits’ egenskaber, er lige så vigtige:</p>
+      <ul>
+        <li><strong>Shor’s algoritme:</strong> Faktorerer store tal langt hurtigere end klassiske metoder. Dette kan potentielt bryde moderne kryptering og ændre datasikkerhed radikalt.</li>
+        <li><strong>Grover’s algoritme:</strong> Giver en kvadratisk hastighedsfordel ved søgning i databaser, hvilket har store anvendelser inden for dataanalyse og optimering.</li>
+        <li><strong>Variational Quantum Eigensolver (VQE):</strong> Kan beregne energitilstande i molekyler, hvilket revolutionerer forskning inden for kemi, materialer og medicin.</li>
+      </ul>
+      <p>Disse algoritmer udnytter kvante-CPU’ens evne til at håndtere mange muligheder samtidig og løse problemer, som er praktisk umulige for klassiske computere. Derudover udvikles løbende nye algoritmer, hvilket betyder, at potentialet for kvantecomputere stadig vokser hurtigt.</p>
+
+      <h3 style="color:var(--accent)">Kvante-CPU’er og kunstig intelligens</h3>
+      <p>Kombinationen af kvantecomputere og AI er en af de mest transformative anvendelser. Træning af store AI-modeller som ChatGPT kræver enorme ressourcer, men kvantecomputere kan potentielt accelerere denne proces.</p>
+      <p>Fordele inkluderer:</p>
+      <ul>
+        <li>Hurtigere træning af neurale netværk.</li>
+        <li>Simulering af komplekse systemer som menneskehjernen.</li>
+        <li>Mulighed for udvikling af AI, der kan nærme sig ægte bevidsthed.</li>
+      </ul>
+      <p>Dette kan ændre måden, vi forstår og udvikler kunstig intelligens på, og åbne døren til nye typer problemløsning, som vi kun kan drømme om i dag. Kvante-AI kunne for eksempel simulere biologiske systemer for at forudsige sygdomsforløb eller udvikle nye behandlinger på rekordtid.</p>
+
+      <h3 style="color:var(--accent)">Etiske og samfundsmæssige konsekvenser</h3>
+      <p>Kvantecomputere rejser også store etiske spørgsmål:</p>
+      <ul>
+        <li><strong>Datasikkerhed:</strong> Shor’s algoritme kan bryde eksisterende kryptering, hvilket skaber risiko for misbrug af data.</li>
+        <li><strong>Magtfordeling:</strong> Hvis kun få lande eller virksomheder ejer teknologien, kan det skabe globale ubalancer.</li>
+        <li><strong>Arbejdsmarkedet:</strong> Mange job vil ændre sig, når kvantecomputere overtager komplekse opgaver inden for forskning, analyse og optimering.</li>
+        <li><strong>Etik og kontrol:</strong> Risiko for misbrug i overvågning og manipulation gør regulering og internationalt samarbejde afgørende.</li>
+      </ul>
+
+      <h3 style="color:var(--accent)">Fremtidsperspektiv</h3>
+      <p>Kvantecomputere er stadig i udviklingsfasen. Udfordringer inkluderer stabilitet, skalerbarhed og udvikling af nye algoritmer. Men eksperter forudser, at inden for de næste 10–20 år vil kvantecomputere kunne løse problemer, som i dag er uoverkommelige.</p>
+      <p>Mulige fremtidige anvendelser:</p>
+      <ul>
+        <li>Medicinsk forskning: simulering af komplekse molekylstrukturer.</li>
+        <li>Klima- og miljømodeller: mere præcise forudsigelser af klimaforandringer.</li>
+        <li>Finans og logistik: optimering af store netværk og komplekse datasæt.</li>
+        <li>Kunstig intelligens: træning af neurale netværk på måder, som ikke er praktiske med klassiske computere.</li>
+      </ul>
+
+      <h3 style="color:var(--accent)">Konklusion</h3>
+      <p>En kvante-CPU repræsenterer et helt nyt paradigme. Ved at udnytte superposition, entanglement og interferens kan den undersøge et uendeligt stort rum af muligheder og finde løsninger, som klassiske computere ikke kan nå.</p>
+      <p>Michio Kaku beskriver kvantecomputere som en revolution, der kan ændre alt fra kryptering og medicin til AI og forståelsen af bevidsthed. Fremtiden med kvante-CPU’er handler derfor ikke kun om teknologi, men også om, hvordan vi som samfund bruger denne kraftfulde teknologi ansvarligt og etisk.</p>
+
+    </div>
+  </div>
+</div>
 
 <script>
   // Accordion toggle
@@ -463,7 +598,6 @@
     btn.addEventListener('click', ()=>{
       const target = document.getElementById(btn.dataset.target);
       const isOpen = target.classList.contains('open');
-      // close sibling panels in same card
       const card = btn.closest('.card');
       card.querySelectorAll('.accordion-panel').forEach(p=>p.classList.remove('open'));
       card.querySelectorAll('.accordion-header').forEach(h=>h.setAttribute('aria-expanded','false'));
@@ -485,7 +619,6 @@
       const card = btn.closest('.card');
       card.querySelectorAll('.btn').forEach(b=>b.classList.remove('active'));
       btn.classList.add('active');
-      // hide/show levels inside this card
       card.querySelectorAll('.level').forEach(el=>el.style.display='none');
       card.querySelectorAll('.level.overview').forEach(el=>el.style.display='block');
       if(level==='intermediate') card.querySelectorAll('.level.intermediate').forEach(el=>el.style.display='block');
@@ -499,13 +632,10 @@
       const level = btn.dataset.global;
       document.querySelectorAll('[data-global]').forEach(b=>b.classList.remove('active'));
       btn.classList.add('active');
-      // set all cards
       document.querySelectorAll('.card').forEach(card=>{
-        // set local control if present
         const localBtn = card.querySelector('.detail-controls .btn[data-level="'+level+'"]') || card.querySelector('.btn[data-level="'+level+'"]');
         card.querySelectorAll('.btn').forEach(b=>b.classList.remove('active'));
         if(localBtn) localBtn.classList.add('active');
-        // hide/show content
         card.querySelectorAll('.level').forEach(el=>el.style.display='none');
         card.querySelectorAll('.level.overview').forEach(el=>el.style.display='block');
         if(level==='intermediate') card.querySelectorAll('.level.intermediate').forEach(el=>el.style.display='block');
@@ -530,6 +660,25 @@
         target.setAttribute('tabindex','-1'); target.focus({preventScroll:true});
       }
     });
+  });
+
+  // ★ NYT: POPUP LOGIK
+  const openQuantum = document.getElementById("openQuantumPopup");
+  const closeQuantum = document.getElementById("closeQuantumPopup");
+  const quantumPopup = document.getElementById("quantumPopup");
+
+  openQuantum.addEventListener("click", () => {
+    quantumPopup.style.display = "flex";
+  });
+
+  closeQuantum.addEventListener("click", () => {
+    quantumPopup.style.display = "none";
+  });
+
+  quantumPopup.addEventListener("click", (e) => {
+    if (e.target === quantumPopup) {
+      quantumPopup.style.display = "none";
+    }
   });
 </script>
 </body>
